@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from timeit import default_timer as timer
 from parser_utils import Astr, readjustSpacesInString, isolateNextWordDictKeys, concatenateFunction, cleanConcatFunction
 from parser_objs import name_part_dict, concat_list
 
@@ -143,6 +144,12 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
 
 if __name__ == "__main__":
 
-	for x,y in arabicNameParser(Astr('محمد جبار بن لادن أبو أحمد الأفغاني')):
+    start = timer()
+    for x in range(1):
+        result = arabicNameParser(Astr('محمد جبار بن لادن أبو أحمد الأفغاني'))
+    end = timer()
+    print '%s seconds taken to perform a single name' %(end - start)
+
+    for x,y in result:
 		print x,y
 
