@@ -20,28 +20,37 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
     #If we identify any of them and there are words before, the first one is an ism.
     #This does not work for a Nisbah though, we will just include it the nisbah if we can
     #identify it.
-    
-    nasab_str, bef_nasab, arab_str = isolateNextWordDictKeys(arab_str, name_part_dict['nasab'].keys())
-    if nasab_str:
-        nasab = readjustSpacesInString(nasab_str.replace('|',''))
-        if bef_nasab:
-            ism = bef_nasab.split(' ')[0]
-            arab_str = arab_str[len(ism)+1:]
-    
-    kunya_str, bef_kunya, arab_str = isolateNextWordDictKeys(arab_str, name_part_dict['kunya'].keys())
-    if kunya_str:
-        kunya = readjustSpacesInString(kunya_str.replace('|',''))
-        if bef_kunya and (not ism):
-            print 'entered'
-            ism = bef_kunya.split(' ')[0]
-            arab_str = arab_str[len(ism)+1:]
-    
-    
-    nisbah_str, bef_nisbah, arab_str = isolateNextWordDictKeys(arab_str, name_part_dict['nisbah'].keys())
-    if nisbah_str:
-        nisbah = readjustSpacesInString(nisbah_str.replace('|',''))
-    
+
+    def identifyNamePartFunction(arab_string, namepart_list):
+        np_str, bef_np, arab_string = isolateNextWordDictKeys(arab_string, namepart_list)
         
+        if np_str:
+            np_str = readjustSpacesInString(np_str.replace('|',''))
+        
+        return np_str, bef_np, arab_string
+
+
+    def identifyIsmFromNPFunction(before_string, arab_string, ism_part):
+
+        if before_string and not ism_part:
+            ism_part = before_string.split(' ')[0]
+            arab_string = arab_string[len(ism_part)+1:]
+
+        return ism_part, arab_string
+
+
+    nasab, bef_nasab, arab_str = identifyNamePartFunction(arab_str, name_part_dict['nasab'].keys())
+    ism, arab_str = identifyIsmFromNPFunction(bef_nasab, arab_str, ism)
+
+    kunya, bef_kunya, arab_str = identifyNamePartFunction(arab_str, name_part_dict['kunya'].keys())
+    ism, arab_str = identifyIsmFromNPFunction(bef_kunya, arab_str, ism)
+
+    nisbah, bef_nisbah, arab_str = identifyNamePartFunction(arab_str, name_part_dict['nisbah'].keys())
+    
+
+    #If ISM has not been found now the fist word is taken to be the ism.
+    #This is the time also to identify whether the ism does exist in the name.
+    
     if not ism:
         if len(arab_str)==0:
             print 'The string does not seem to contain any ISM.'
@@ -87,6 +96,6 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
 
 if __name__ == "__main__":
 
-	for x,y in arabicNameParser(Astr('من ال السهو')):
+	for x,y in arabicNameParser(Astr('محمد جبار بن لادن أبو أحمد الأفغاني')):
 		print x,y
 
