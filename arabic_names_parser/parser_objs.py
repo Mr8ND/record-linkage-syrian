@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from parser_utils import Astr
 
-#### Defining here the arabic names which define an arabic name part 
+#### Defining here which are the words which signal the beginning of a particular part of the name.
 
 nasab_dict ={Astr('بن '): ['bin', 'ben', 'ibn'],
              Astr('بنت '): ['bint']}
@@ -14,7 +14,7 @@ nisbah_dict = {Astr('من_ال_'): ['of the']}
 name_part_dict = {'nasab': nasab_dict, 'kunya': kunya_dict, 'nisbah': nisbah_dict}
 
 
-#### Defininig here the arabic words which should be aggregated to the following one
+#### Defininig here the arabic words which should be aggregated to the following.
 
 al_list = [Astr('آل '), Astr('ال '), Astr('من ')]
 abdul_list = [Astr('عبد '), Astr('عبدو ')]

@@ -4,14 +4,32 @@ from parser_objs import name_part_dict, concat_list
 
 
 def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_list):
+
+    """
+    This function is the main arabic name parser function.
+
+    INPUT:
+    arab_str - Single string in Arabic, encoded in utf-8
+    name_dict - Dictionary with the signaling words for each name part available
+    concat_list - List with all the words which should be attached to the word after them, which are
+           generally not indicative of a specific name part.
+
+    OUTPUT:
+    List of Tuple containing the following pairs, where "xxx" is the relative name or '' if not found:
+     (ISM, "xxx")
+     (LAQAB, "xxx")
+     (NISBAH, "xxx")
+     (LAQAB/NISBAH, "xxx")
+     (NASAB, "xxx")
+     (KUNYA, "xxx")
+     (OTHER, "xxx")
+    """
     
     ism, laqab, nasab, kunya, nisbah, laqnisb, other = '', '', '', '', '', '', ''
     
     #A little bit of pre-processing.
-    #The words with ' ال' + another name are actually a single name. They should therefore be a single name.
-    #Same goes for the word "", which translates FROM.
-    #Same with the words that translates to Abdul or Abdel.
-    #They should also be a single word.
+    #The are some words in Arabic, like Abdul, that means nothing alone, but they attach to the successive word.
+    #They should be a single word, the function below does that in the arabic string taken into consideration.
     
     arab_str = concatenateFunction(arab_str, conc_list)
     
@@ -22,6 +40,21 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
     #identify it.
 
     def identifyNamePartFunction(arab_string, namepart_list):
+        """
+        This function is a wrapper around the isolateNextWordDictKeys function, with the extra that
+        cleans up the name structure picked up by that function, if any.
+
+        INPUT
+        arab_string - The arabic string in input
+        namepart_list - The string to be passed into the isolateNextWordDictKeys as they signal a particular
+             name structure.
+
+        OUTPUT
+        np_str - The string with the particular name structure identified from the string.
+        bef_np - The part before such particular structure, if any was identified.
+        arab_string - The string pruned of the particular name structure, if any was identified.
+        """
+
         np_str, bef_np, arab_string = isolateNextWordDictKeys(arab_string, namepart_list)
         
         if np_str:
@@ -31,6 +64,20 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
 
 
     def identifyIsmFromNPFunction(before_string, arab_string, ism_part):
+        """
+        This function identify the ism if the ism was not found before, pruning the string from it.
+
+        INPUT
+        before_string - This is the part of the string before a particular name structure. Can be empty
+        arab_string - This is the string, either full or pruned of a particular name structure.
+             Can be empty, but if before_string is not empty then arab_string contains at least before_string.
+        ism_part - The ism of the name. Can be empty
+
+
+        OUPUT
+        ism_part - The ism of the name, if it was given empty and the before_string contained some words.
+        arab_string - The arab string pruned of the ism, if there was any.
+        """
 
         if before_string and not ism_part:
             ism_part = before_string.split(' ')[0]
