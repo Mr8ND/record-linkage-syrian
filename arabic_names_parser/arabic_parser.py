@@ -36,7 +36,8 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
     if sum(unicode_order_str)>0:
         print 'Your string contains not only Arabic characters. The following were identified: %s'%(
             ' | '.join(['*'+str(x)+'*' for j,x in enumerate(arab_str) if unicode_order_str[j]==1]))
-    arab_str = Astr(arab_str)
+    if isinstance(arab_str, str):
+        arab_str = Astr(arab_str)
 
     #The are some words in Arabic, like Abdul, that means nothing alone, but they attach to the successive word.
     #They should be a single word, the function below does that in the arabic string taken into consideration.
