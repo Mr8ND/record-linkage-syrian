@@ -29,6 +29,15 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
     ism, laqab, nasab, kunya, nisbah, laqnisb, other = '', '', '', '', '', '', ''
     
     #A little bit of pre-processing.
+    #We first of all want to identifyif the string is made of all arabic characters or not.
+    #We remove the space (position 32) from the plausible arabic characters.
+
+    unicode_order_str = [1 if (ord(c)<128 and ord(c)!=32) else 0 for c in arab_str]
+    if sum(unicode_order_str)>0:
+        print 'Your string contains not only Arabic characters. The following were identified: %s'%(
+            ' | '.join(['*'+str(x)+'*' for j,x in enumerate(arab_str) if unicode_order_str[j]==1]))
+    arab_str = Astr(arab_str)
+
     #The are some words in Arabic, like Abdul, that means nothing alone, but they attach to the successive word.
     #They should be a single word, the function below does that in the arabic string taken into consideration.
     
@@ -146,10 +155,11 @@ if __name__ == "__main__":
 
     start = timer()
     for x in range(1):
-        result = arabicNameParser(Astr('محمد جبار بن لادن أبو أحمد الأفغاني'))
+        result = arabicNameParser('محمد جبار بن لادن أبو أحمد الأفغاني')
     end = timer()
     print '%s seconds taken to perform a single name' %(end - start)
-
-    for x,y in result:
-		print x,y
+    print '\n'
+    print result
+    #for x,y in result:
+    #		print x,y
 
