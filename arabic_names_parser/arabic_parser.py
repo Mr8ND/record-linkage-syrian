@@ -4,7 +4,7 @@ from parser_utils import Astr, readjustSpacesInString, isolateNextWordDictKeys, 
 from parser_objs import name_part_dict, concat_list
 
 
-def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_list):
+def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_list, print_flag= True):
 
     """
     This function is the main arabic name parser function.
@@ -33,7 +33,7 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
     #We remove the space (position 32) from the plausible arabic characters.
 
     unicode_order_str = [1 if (ord(c)<128 and ord(c)!=32) else 0 for c in arab_str]
-    if sum(unicode_order_str)>0:
+    if sum(unicode_order_str)>0 and print_flag:
         print 'Your string contains not only Arabic characters. The following were identified: %s'%(
             ' | '.join(['*'+str(x)+'*' for j,x in enumerate(arab_str) if unicode_order_str[j]==1]))
     if isinstance(arab_str, str):
@@ -110,7 +110,7 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
     #This is the time also to identify whether the ism does exist in the name.
     
     if not ism:
-        if len(arab_str)==0:
+        if len(arab_str)==0 and print_flag:
             print 'The string does not seem to contain any ISM.'
         else:
             ism = arab_str.split(' ')[0]
