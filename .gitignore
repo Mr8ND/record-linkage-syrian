@@ -1,7 +1,6 @@
 #Not submitting the files needed to scp file to server
 arabic_names_parser/server_push_commands.txt
 arabic_names_parser/sandbox.py
-*.pyc
 
 #COMMON CONFIGURATIONS (from https://gist.github.com/octocat/9257657)
 # Compiled source #
