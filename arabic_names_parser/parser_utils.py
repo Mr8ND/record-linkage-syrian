@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 def Astr(string):
     """
     This function encodes in utf-8 a ASCII string with Arabic character in order for it to be
@@ -27,7 +28,7 @@ def readjustSpacesInString(string):
     return ' '.join([x for x in string.split(' ') if x])
 
 
-def cleanConcatFunction(string):
+def cleanConcatFunction(string, concat_symbol='_'):
     """
     This function removes the concatenation done by the concatenateFunction below on a string.
     Useful just for output purposes
@@ -39,7 +40,7 @@ def cleanConcatFunction(string):
     The same string without the concatenation - i.e. without "_" of whatever the concatenation symbol was
     """
 
-    return string.replace('_', ' ')
+    return string.replace(concat_symbol, ' ')
 
 
 def isolateNextWordDictKeys(arab_string, dict_keys):
@@ -65,19 +66,18 @@ def isolateNextWordDictKeys(arab_string, dict_keys):
     
     for prefix in dict_keys:
         if prefix in arab_string:
-            
-            count_prefix = arab_string.count(prefix)
-            n = len(prefix)
-            
-            for x in range(count_prefix):
-                
-                index = arab_string.find(prefix)
-                remainder_first_word = readjustSpacesInString(arab_string[index+n:]).split(' ')[0]
-                block_sel = readjustSpacesInString(' '.join([prefix, remainder_first_word]))
-                extraction += block_sel + ' | '
-                
-                if x == 0: before += arab_string[:index]
-                arab_string = arab_string[:index] + arab_string[index+n+len(remainder_first_word)+1:]
+
+            arab_string_prefcorr = arab_string.replace(prefix, prefix[:-1]+'~').split(' ')
+            nameparts_pref = [1 if '~' in x else 0 for x in arab_string_prefcorr]
+
+            extraction = '|'.join([cleanConcatFunction(x,concat_symbol='~') for i,x in enumerate(arab_string_prefcorr) 
+                            if nameparts_pref[i]==1])
+
+            if nameparts_pref.index(1) >0:
+                before = ' '.join([arab_string_prefcorr[i] for i in range(nameparts_pref.index(1))])
+
+            arab_string = [x for i,x in enumerate(arab_string_prefcorr) if nameparts_pref[i]==0]
+            arab_string = '' if not arab_string else ' '.join(arab_string)
 
     return extraction, before, arab_string
             
@@ -114,13 +114,8 @@ def concatenateFunction(arab_string, elem_list, isolated_flag = True):
         return output
     
     for elem in elem_list:
-        if elem in arab_string and (not isolated_flag or returnIsolated(elem, arab_string)):
-            obtained, _ , _ = isolateNextWordDictKeys(arab_string, [elem])
-            
-            if obtained:
-                for obt_elem in obtained.split('|'):
-                    
-                    obt_elem_sub = readjustSpacesInString(obt_elem)
-                    mod_arab_string = mod_arab_string.replace(obt_elem_sub, '_'.join(obt_elem_sub.split(' ')))
+        if elem in mod_arab_string and (not isolated_flag or returnIsolated(elem, arab_string)):
+
+            mod_arab_string = mod_arab_string.replace(elem, elem[:-1]+'_')
     
     return mod_arab_string
