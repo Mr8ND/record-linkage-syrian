@@ -114,6 +114,7 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
             print 'The string does not seem to contain any ISM.'
         else:
             ism = arab_str.split(' ')[0]
+            arab_str = arab_str[len(ism)+1:]
     
     #Now we are left with identifying general nisbah or laqab.
     #We know what was before both the kunya and nasab, and that should be the laqab.
@@ -125,7 +126,7 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
         rem_bef = bef_kunya.replace(ism+' ', '') if flag_names==2 else bef_nasab.replace(ism+' ', '')
         after_str = arab_str.replace(bef_kunya+' ', '') if flag_names==2 else arab_str.replace(bef_nasab+' ', '')
         if rem_bef and len(rem_bef)>=1:
-            laqab += rem_bef
+            laqab += readjustSpacesInString(rem_bef)
         if after_str and len(after_str)>=1:
             nisbah += after_str.split(' ')[0]
             other += ' '.join(after_str.split(' '))[1:] if len(after_str.split(' '))>1 else ''
@@ -154,13 +155,14 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
 
 if __name__ == "__main__":
 
-    start = timer()
-    for x in range(1):
-        result = arabicNameParser('محمد جبار بن لادن أبو أحمد الأفغاني')
-    end = timer()
-    print '%s seconds taken to perform a single name' %(end - start)
-    print '\n'
-    print result
-    #for x,y in result:
-    #		print x,y
+    #start = timer()
+    #for x in range(1):
+    result = arabicNameParser('محمد جبار بن لادن أبو أحمد الأفغاني')
+    #print result
+    #end = timer()
+    #print '%s seconds taken to perform a single name' %(end - start)
+    #print '\n'
+    #print result
+    for x,y in result:
+    	print x,y
 
