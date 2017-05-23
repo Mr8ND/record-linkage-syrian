@@ -29,37 +29,37 @@ class MyTest(unittest.TestCase):
 		self.assertEqual(arabic_soundex_main('ابب'), 'x1')
 
 #	def test4(self):
-#		self.assertEqual(arabic_soundex_main('\u0627\u0641\u0628'), 'x1')
+#		self.assertEqual(arabic_soundex_main('ابب'), 'x1')
 
 #	def test5(self):
-#		self.assertEqual(arabic_soundex_main('\u0627\u0641\u0628'), 'x1')
+#		self.assertEqual(arabic_soundex_main('ابب'), 'x1')
 
 #	def test6(self):
-#		self.assertEqual(arabic_soundex_main('\u0627\u0641\u0628'), 'x1')
+#		self.assertEqual(arabic_soundex_main('ابب'), 'x1')
 
 #	def test7(self):
-#		self.assertEqual(arabic_soundex_main('\u0627\u0641\u0628'), 'x1')
+#		self.assertEqual(arabic_soundex_main('ابب'), 'x1')
 
 #	def test8(self):
-#		self.assertEqual(arabic_soundex_main('\u0627\u0641\u0628'), 'x1')
+#		self.assertEqual(arabic_soundex_main('ابب'), 'x1')
 
 #	def test9(self):
-#		self.assertEqual(arabic_soundex_main('\u0627\u0641\u0628'), 'x1')
+#		self.assertEqual(arabic_soundex_main('ابب'), 'x1')
 
 #	def test10(self):
-#		self.assertEqual(arabic_soundex_main('\u0627\u0641\u0628'), 'x1')
+#		self.assertEqual(arabic_soundex_main('ابب'), 'x1')
 
 #	def test11(self):
-#		self.assertEqual(arabic_soundex_main('\u0627\u0641\u0628'), 'x1')
+#		self.assertEqual(arabic_soundex_main('ابب'), 'x1')
 
 #	def test12(self):
-#		self.assertEqual(arabic_soundex_main('\u0627\u0641\u0628'), 'x1')
+#		self.assertEqual(arabic_soundex_main('ابب'), 'x1')
 
 #	def test13(self):
-#		self.assertEqual(arabic_soundex_main('\u0627\u0641\u0628'), 'x1')
+#		self.assertEqual(arabic_soundex_main('ابب'), 'x1')
 
 #	def test14(self):
-#		self.assertEqual(arabic_soundex_main('\u0627\u0641\u0628'), 'x1')
+#		self.assertEqual(arabic_soundex_main('ابب'), 'x1')
 
 if __name__ == '__main__':
 	unittest.main()
