@@ -6,7 +6,7 @@ from parser_utils import Astr
 nasab_dict ={Astr('بن '): ['bin', 'ben', 'ibn'],
              Astr('بنت '): ['bint']}
 
-kunya_dict = {Astr('أبو '): ['abu'],
+kunya_dict = {Astr('أبو '): ['abu'], Astr('ابو '):['abu'],
               Astr('أم '): ['umm', 'oum']}
 
 nisbah_dict = {Astr('من_ال_'): ['of the']}
@@ -17,7 +17,7 @@ name_part_dict = {'nasab': nasab_dict, 'kunya': kunya_dict, 'nisbah': nisbah_dic
 #### Defininig here the arabic words which should be aggregated to the following.
 
 al_list = [Astr('آل '), Astr('ال '), Astr('من ')]
-abdul_list = [Astr('عبد '), Astr('عبدو ')]
+abdul_list = [Astr('عبد '), Astr('عبدو '), Astr('أبدول '), Astr('أبدل ')]
 master_list = [Astr('السيد '), Astr('سيد '), Astr('السيدة ')]
 
 concat_list = al_list + abdul_list + master_list
