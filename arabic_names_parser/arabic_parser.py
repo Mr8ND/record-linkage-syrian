@@ -69,7 +69,7 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
         np_str, bef_np, arab_string = isolateNextWordDictKeys(arab_string, namepart_list)
         
         if np_str:
-            np_str = readjustSpacesInString(np_str.replace('|',''))
+            np_str = readjustSpacesInString(np_str.replace('|',' '))
         
         return np_str, bef_np, arab_string
 
@@ -120,18 +120,22 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
     #We know what was before both the kunya and nasab, and that should be the laqab.
     #What was after is usually the nisbah.
     
-    flag_names = int(nasab is not '') + int(kunya is not '')
-    
-    if flag_names>0:
-        rem_bef = bef_kunya.replace(ism+' ', '') if flag_names==2 else bef_nasab.replace(ism+' ', '')
-        after_str = arab_str.replace(bef_kunya+' ', '') if flag_names==2 else arab_str.replace(bef_nasab+' ', '')
+    bef_vec = [bef_nasab, bef_kunya]
+    flag_names = [1 if bef_part else 0 for bef_part in bef_vec]
+
+    if sum(flag_names)>0 and arab_str:
+        bef_part_selected = bef_vec[1] if sum(flag_names)==2 else bef_vec[flag_names.index(1)]
+
+        rem_bef = bef_part_selected.replace(ism+' ', '')
+        after_str = arab_str.replace(rem_bef+' ', '') if rem_bef != arab_str else ''
+
         if rem_bef and len(rem_bef)>=1:
             laqab += readjustSpacesInString(rem_bef)
         if after_str and len(after_str)>=1:
             nisbah += after_str.split(' ')[0]
             other += ' '.join(after_str.split(' '))[1:] if len(after_str.split(' '))>1 else ''
     
-    else:
+    elif arab_str:
         
     #If no nasab or kunya, the two after the name should be either laqab/nisbah.
     #If there are more than two after the ism, then the rest goes in other.
@@ -157,7 +161,7 @@ if __name__ == "__main__":
 
     #start = timer()
     #for x in range(1):
-    result = arabicNameParser('محمد جبار بن لادن أبو أحمد الأفغاني')
+    result = arabicNameParser('محمد الفاييت ابو لادن')
     #print result
     #end = timer()
     #print '%s seconds taken to perform a single name' %(end - start)
