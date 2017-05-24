@@ -48,6 +48,14 @@ class MyTest(unittest.TestCase):
     		self.assertEqual(arabicNameParser(k[0])[index_np_laqab][1], Astr(k[1]))
 
 
+    def test_posname_nisbah(self, namepart='NISBAH'):
+    	index_np_nisbah = namepart_vec.index(namepart)
+
+    	for i, k in enumerate(test_dict[namepart]):
+    		print 'Testing the %s entry of the %s test list' %(str(i+1), namepart)
+    		self.assertEqual(arabicNameParser(k[0])[index_np_nisbah][1], Astr(k[1]))
+
+
 
 if __name__ == '__main__':
 	unittest.main()
