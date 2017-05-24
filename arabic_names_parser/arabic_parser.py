@@ -126,7 +126,7 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
     if sum(flag_names)>0 and arab_str:
         bef_part_selected = bef_vec[1] if sum(flag_names)==2 else bef_vec[flag_names.index(1)]
 
-        rem_bef = bef_part_selected.replace(ism+' ', '')
+        rem_bef = bef_part_selected.replace(ism+' ', '') if ism != bef_part_selected else ''
         after_str = arab_str.replace(rem_bef+' ', '') if rem_bef != arab_str else ''
 
         if rem_bef and len(rem_bef)>=1:
@@ -161,7 +161,7 @@ if __name__ == "__main__":
 
     #start = timer()
     #for x in range(1):
-    result = arabicNameParser('محمد الفاييت ابو لادن')
+    result = arabicNameParser('محمد أوم جبار')
     #print result
     #end = timer()
     #print '%s seconds taken to perform a single name' %(end - start)
