@@ -6,8 +6,10 @@ from parser_utils import Astr
 nasab_dict ={Astr('بن '): ['bin', 'ben', 'ibn'],
              Astr('بنت '): ['bint']}
 
-kunya_dict = {Astr('أبو '): ['abu'], Astr('ابو '):['abu'],
-              Astr('أم '): ['umm', 'oum']}
+kunya_dict = {Astr('أبو '): ['abu'],
+			  Astr('ابو '): ['abu'],
+              Astr('أم '): ['umm', 'oum'],
+              Astr('أوم '): ['umm', 'oum']}
 
 nisbah_dict = {Astr('من_ال_'): ['of the']}
 
