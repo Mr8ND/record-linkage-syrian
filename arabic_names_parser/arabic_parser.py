@@ -133,7 +133,7 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
             laqab += readjustSpacesInString(rem_bef)
         if after_str and len(after_str)>=1:
             nisbah += after_str.split(' ')[0]
-            other += ' '.join(after_str.split(' '))[1:] if len(after_str.split(' '))>1 else ''
+            other += ' '.join(after_str.split(' ')[1:]) if len(after_str.split(' '))>1 else ''
     
     elif arab_str:
         
@@ -161,7 +161,8 @@ if __name__ == "__main__":
 
     #start = timer()
     #for x in range(1):
-    result = arabicNameParser('محمد أوم جبار')
+    print Astr('محمد جبار بن لادن أفغاني كازاكي كاكوتاني')
+    result = arabicNameParser('محمد جبار بن لادن أفغاني كازاكي كاكوتاني')
     #print result
     #end = timer()
     #print '%s seconds taken to perform a single name' %(end - start)
