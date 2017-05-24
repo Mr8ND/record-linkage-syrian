@@ -26,7 +26,7 @@ class MyTest(unittest.TestCase):
 		self.assertEqual(arabic_soundex_main('ciao', firstcharuniforming=False), 'ciao')
 
 	def test3(self):
-		self.assertEqual(arabic_soundex_main('ابب'), 'x1')
+		self.assertEqual(arabic_soundex_main(unicode('ابب', 'utf-8')), 'x1')
 
 #	def test4(self):
 #		self.assertEqual(arabic_soundex_main('ابب'), 'x1')

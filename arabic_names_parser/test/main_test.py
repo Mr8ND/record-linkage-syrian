@@ -31,5 +31,23 @@ class MyTest(unittest.TestCase):
     		print 'Testing the %s entry of the %s test list' %(str(i+1), namepart)
     		self.assertEqual(arabicNameParser(k[0])[index_np_nasab][1], Astr(k[1]))
 
+
+    def test_posname_kunya(self, namepart='KUNYA'):
+    	index_np_kunya = namepart_vec.index(namepart)
+
+    	for i, k in enumerate(test_dict[namepart]):
+    		print 'Testing the %s entry of the %s test list' %(str(i+1), namepart)
+    		self.assertEqual(arabicNameParser(k[0])[index_np_kunya][1], Astr(k[1]))
+
+
+    def test_posname_laqab(self, namepart='LAQAB'):
+    	index_np_laqab = namepart_vec.index(namepart)
+
+    	for i, k in enumerate(test_dict[namepart]):
+    		print 'Testing the %s entry of the %s test list' %(str(i+1), namepart)
+    		self.assertEqual(arabicNameParser(k[0])[index_np_laqab][1], Astr(k[1]))
+
+
+
 if __name__ == '__main__':
 	unittest.main()
