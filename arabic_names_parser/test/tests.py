@@ -37,6 +37,16 @@ nisbah_list = [('محمد الفاييت ابو لادن', ''),
 			   ('محمد', ''),
 			   ('محمد بن لادن الفياطي', 'الفياطي')]
 
+
+laqab_nisbah_list = [('محمد جبار بن لادن', ''), #Mohammed jabbar ben laden, laqab/nisbah should be empty here.
+					 ('محمد جبار لادن', 'جبار لادن'), #Mohammed jabbar laden, laqab/nisbah should be capturing aything after the ism up to two words
+					 ('محمد جبار', 'جبار'), #Mohammed jabbar, Jabbar should be considered as laqab/nisbah
+					 ('محمد جبار أفغاني كازاكي كاكوتاني', 'جبار أفغاني')] #Mohammed jabbar afghani kazaki kakutani, Jabbar Afghani should be considered as laqab/nisbah.
+
+other_list = [('محمد جبار بن لادن', ''), #Mohammed jabbar ben laden, other should be empty here.
+			  ('محمد جبار بن لادن أفغاني كازاكي كاكوتاني', 'كازاكي كاكوتاني'), #Mohammed jabbar ben laden afghani kazaki kakutani. In this case the kazaki kakutani should be in other 
+			  ('محمد جبار أفغاني كازاكي كاكوتاني', 'كازاكي كاكوتاني')] #Mohammed jabbar afghani kazaki kakutani, in this case again kazaki kakutani should be in other
+
 full_test_list = [('محمد جبار بن لادن أبو أحمد الأفغاني', [('ISM', u'\u0645\u062d\u0645\u062f'), 
 														   ('LAQAB', u'\u062c\u0628\u0627\u0631'), 
 														   ('NASAB', u'\u0628\u0646 \u0644\u0627\u062f\u0646'),
@@ -52,6 +62,6 @@ test_dict = {'ISM': ism_list,
 			 'NASAB': nasab_list,
 			 'KUNYA': kunya_list,
 			 'NISBAH': nisbah_list, 
-			 'LAQAB/NISBAH':[],
-			 'OTHER':[],
+			 'LAQAB/NISBAH':laqab_nisbah_list,
+			 'OTHER':other_list,
 			 'FULL_TEST': full_test_list}
