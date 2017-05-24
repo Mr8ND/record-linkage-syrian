@@ -37,4 +37,21 @@ nisbah_list = [('محمد الفاييت ابو لادن', ''),
 			   ('محمد', ''),
 			   ('محمد بن لادن الفياطي', 'الفياطي')]
 
-test_dict = {'ISM': ism_list, 'LAQAB': laqab_list, 'NASAB': nasab_list, 'KUNYA': kunya_list, 'NISBAH': nisbah_list, 'LAQAB/NISBAH':[], 'OTHER':[]}
+full_test_list = [('محمد جبار بن لادن أبو أحمد الأفغاني', [('ISM', u'\u0645\u062d\u0645\u062f'), 
+														   ('LAQAB', u'\u062c\u0628\u0627\u0631'), 
+														   ('NASAB', u'\u0628\u0646 \u0644\u0627\u062f\u0646'),
+														   ('KUNYA', u'\u0623\u0628\u0648 \u0623\u062d\u0645\u062f'),
+														   ('NISBAH', u'\u0627\u0644\u0623\u0641\u063a\u0627\u0646\u064a'),
+														   ('LAQAB/NISBAH', ''), 
+														   ('OTHER', '')] )
+				]
+
+
+test_dict = {'ISM': ism_list, 
+			 'LAQAB': laqab_list, 
+			 'NASAB': nasab_list,
+			 'KUNYA': kunya_list,
+			 'NISBAH': nisbah_list, 
+			 'LAQAB/NISBAH':[],
+			 'OTHER':[],
+			 'FULL_TEST': full_test_list}
