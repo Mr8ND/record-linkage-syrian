@@ -11,6 +11,17 @@ tanwin_vec = (Astr('ً'), Astr('ٌ'), Astr('ٍ'))
 
 
 def strip_accents(s, tanween_flag=False):
+	'''
+	This function takes any unicode string and strips the accents. As this function has been created with arabic in mind, if the
+	tanween_flag is True, it will normalize all accents apart from tanween accents.
+
+	INPUT
+	- s : this is the unicode string. The function was thought for arabic strings, but it could be any strings
+	- tanween_flag : whether tanween accents should be excluded from normalization or not
+
+	OUTPUT
+	The string normalized from accents, excluding tanween if tanween_flag is True.
+	'''
 
 	if isinstance(s, str):
 		s = Astr(s)
