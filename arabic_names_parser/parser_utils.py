@@ -43,6 +43,20 @@ def cleanConcatFunction(string, concat_symbol='_'):
     return string.replace(concat_symbol, ' ')
 
 
+def recognizedNameFunction(arab_str, arab_list):
+    '''
+    This is an ad-hoc function built in order to check whether an arabic string is in a list of other, maybe particular, arabic strings.
+
+    INPUT:
+    - arab_str: the arabic string
+
+    OUTPUT:
+    - T/F - boolean output whether the string is in the provided list or not
+    '''
+
+    return arab_str in [Astr(x) for x in arab_list]
+
+
 def isolateNextWordDictKeys(arab_string, dict_keys):
     """
     This function is used to find whether there are in the string words that signal a particular name structure

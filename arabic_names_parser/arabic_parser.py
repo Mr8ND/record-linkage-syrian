@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from timeit import default_timer as timer
-from parser_utils import Astr, readjustSpacesInString, isolateNextWordDictKeys, concatenateFunction, cleanConcatFunction
+from parser_utils import Astr, readjustSpacesInString, isolateNextWordDictKeys, concatenateFunction, cleanConcatFunction, recognizedNameFunction
 from parser_objs import name_part_dict, concat_list
+from names_folder.specific_names import createVectorNamesFromFile
 
 
-def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_list, print_flag= True):
+def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_list, print_flag= True, filepath_names_folder = '../'):
 
     """
     This function is the main arabic name parser function.
@@ -25,8 +26,13 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
      (KUNYA, "xxx")
      (OTHER, "xxx")
     """
+
+    #We initialize the different variables here and the particular name files we have stored.
     
     ism, laqab, nasab, kunya, nisbah, laqnisb, other = '', '', '', '', '', '', ''
+    laqab_M = createVectorNamesFromFile(filepath_names_folder + 'names_folder/laqab_M.txt')
+    laqab_F = createVectorNamesFromFile(filepath_names_folder + 'names_folder/laqab_f.txt')
+    nisbah_M = createVectorNamesFromFile(filepath_names_folder + 'names_folder/nisbah_M.txt')
     
     #A little bit of pre-processing.
     #We first of all want to identifyif the string is made of all arabic characters or not.
@@ -142,10 +148,33 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
         
         arab_str_noism = arab_str.replace(ism+' ', '')
         n = len(arab_str_noism.split(' '))
-        if n<=2:
-            laqnisb += arab_str_noism
-        else:
-            laqnisb += ' '.join(arab_str_noism.split(' ')[:2])
+
+        if arab_str_noism and n<=2:
+            for word_noism in arab_str_noism.split(' '):
+
+                recon_laq = recognizedNameFunction(word_noism, laqab_M+laqab_F)
+                recon_nis = recognizedNameFunction(word_noism, nisbah_M)
+
+                if recon_laq:
+                    laqab += word_noism if not laqab else ' '+word_noism
+                elif recon_nis:
+                    nisbah += word_noism if not nisbah else ' '+word_noism
+                else:
+                    laqnisb += word_noism if not laqnisb else ' '+word_noism
+
+        elif arab_str_noism:
+            for word_noism in arab_str_noism.split(' ')[:2]:
+
+                recon_laq = recognizedNameFunction(word_noism, laqab_M+laqab_F)
+                recon_nis = recognizedNameFunction(word_noism, nisbah_M)
+
+                if recon_laq:
+                    laqab += word_noism if not laqab else ' '+word_noism
+                elif recon_nis:
+                    nisbah += word_noism if not nisbah else ' '+word_noism
+                else:
+                    laqnisb += word_noism if not laqnisb else ' '+word_noism
+
             other += ' '.join(arab_str_noism.split(' ')[2:])
         
     return [tuple(['ISM', cleanConcatFunction(ism)]),
@@ -161,8 +190,8 @@ if __name__ == "__main__":
 
     #start = timer()
     #for x in range(1):
-    print Astr('محمد جبار بن لادن أفغاني كازاكي كاكوتاني')
-    result = arabicNameParser('محمد جبار بن لادن أفغاني كازاكي كاكوتاني')
+    print Astr('محمد الفاييت العدواني')
+    result = arabicNameParser('محمد الفاييت العدواني')
     #print result
     #end = timer()
     #print '%s seconds taken to perform a single name' %(end - start)
