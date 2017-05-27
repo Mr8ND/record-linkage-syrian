@@ -22,3 +22,5 @@ def createVectorNamesFromFile(filename):
 
 if __name__ == '__main__':
 	print createVectorNamesFromFile('laqab_M.txt')
+	print createVectorNamesFromFile('laqab_F.txt')
+	print createVectorNamesFromFile('nisbah_M.txt')
