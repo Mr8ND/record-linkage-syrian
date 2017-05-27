@@ -31,7 +31,7 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
     
     ism, laqab, nasab, kunya, nisbah, laqnisb, other = '', '', '', '', '', '', ''
     laqab_M = createVectorNamesFromFile(filepath_names_folder + 'names_folder/laqab_M.txt')
-    laqab_F = createVectorNamesFromFile(filepath_names_folder + 'names_folder/laqab_f.txt')
+    laqab_F = createVectorNamesFromFile(filepath_names_folder + 'names_folder/laqab_F.txt')
     nisbah_M = createVectorNamesFromFile(filepath_names_folder + 'names_folder/nisbah_M.txt')
     
     #A little bit of pre-processing.
