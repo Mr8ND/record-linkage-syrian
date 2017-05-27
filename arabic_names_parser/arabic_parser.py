@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from timeit import default_timer as timer
 from parser_utils import Astr, readjustSpacesInString, isolateNextWordDictKeys, concatenateFunction, cleanConcatFunction, recognizedNameFunction
-from parser_objs import name_part_dict, concat_list
-from names_folder.specific_names import createVectorNamesFromFile
+from parser_objs import name_part_dict, concat_list, laqab_F, laqab_M, nisbah_M
+#from names_folder.specific_names import createVectorNamesFromFile
 
 
-def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_list, print_flag= True, filepath_names_folder = '../'):
+def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_list, print_flag= True): #, filepath_names_folder = '../'):
 
     """
     This function is the main arabic name parser function.
@@ -30,9 +30,9 @@ def arabicNameParser(arab_str, name_dict = name_part_dict, conc_list = concat_li
     #We initialize the different variables here and the particular name files we have stored.
     
     ism, laqab, nasab, kunya, nisbah, laqnisb, other = '', '', '', '', '', '', ''
-    laqab_M = createVectorNamesFromFile(filepath_names_folder + 'names_folder/laqab_M.txt')
-    laqab_F = createVectorNamesFromFile(filepath_names_folder + 'names_folder/laqab_F.txt')
-    nisbah_M = createVectorNamesFromFile(filepath_names_folder + 'names_folder/nisbah_M.txt')
+    #laqab_M = createVectorNamesFromFile(filepath_names_folder + 'names_folder/laqab_M.txt')
+    #laqab_F = createVectorNamesFromFile(filepath_names_folder + 'names_folder/laqab_F.txt')
+    #nisbah_M = createVectorNamesFromFile(filepath_names_folder + 'names_folder/nisbah_M.txt')
     
     #A little bit of pre-processing.
     #We first of all want to identifyif the string is made of all arabic characters or not.
