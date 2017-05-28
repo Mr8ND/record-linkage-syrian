@@ -36,7 +36,7 @@ def Astr(string):
 	return unicode(string, encoding='utf-8')
 
 
-def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True):
+def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True, accents_strip=True):
 
 	if not arab_str:
 		print 'The string passed into this function needs to be non-empty'
@@ -45,7 +45,8 @@ def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True
 	if isinstance(arab_str, str):
 		arab_str = Astr(arab_str)
 
-	arab_str = strip_accents(arab_str)
+	if accents_strip:
+		arab_str = strip_accents(arab_str)
 
 
 	#The first thing to do is to exclude the first letter in the firstletter_rem option is activated.
