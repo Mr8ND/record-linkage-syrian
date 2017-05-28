@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import sys
+sys.path.append("..")
+from arabic_utils.general_utils_arabic import strip_accents
 
 lookup_dict = {'\u0627\u0623\u0625\u0622\u062d\u062e\u0647\u0639\u063a\u0634\u0648\u064a': '0',
 			   '\u0641\u0628': '1',
@@ -39,8 +42,10 @@ def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True
 		print 'The string passed into this function needs to be non-empty'
 		raise TypeError
 
-	#if isinstance(arab_str, str):
-	#	arab_str = Astr(arab_str)
+	if isinstance(arab_str, str):
+		arab_str = Astr(arab_str)
+
+	arab_str = strip_accents(arab_str)
 
 
 	#The first thing to do is to exclude the first letter in the firstletter_rem option is activated.
