@@ -2,6 +2,7 @@
 arabic_names_parser/server_push_commands.txt
 arabic_names_parser/sandbox.py
 arabic_soundex/arabic_soundex_server.py
+arabic_names_parser/specific_nameparts_dicts.py
 *.pyc
 
 #COMMON CONFIGURATIONS (from https://gist.github.com/octocat/9257657)
