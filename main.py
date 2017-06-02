@@ -1,5 +1,5 @@
 from function_files import align_symbol, feature_dict
-from utilities import ngramFunction
+from utils import ngramFunction
 
 
 def featureExtraction(align_pair, feature_list):
