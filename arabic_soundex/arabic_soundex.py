@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 sys.path.append("..")
+sys.path.append("../..")
 from arabic_utils.general_utils_arabic import strip_accents
 
 lookup_dict = {'\u0627\u0623\u0625\u0622\u062d\u062e\u0647\u0639\u063a\u0634\u0648\u064a': '0',
@@ -21,6 +22,14 @@ lookup_dict_arab = {u'ا': 0, u'أ': 0, u'إ': 0, u'آ': 0, u'ح': 0, u'خ': 0, 
                 	u'ر': 6
                 	}
 
+
+def emptyStringError(arab_str):
+	if not arab_str:
+		raise TypeError('The string passed into this function needs to be non-empty')
+	else:
+		pass
+
+
 def Astr(string):
 	'''
 	This function encodes in utf-8 a ASCII string with Arabic character in order for it to be
@@ -36,11 +45,9 @@ def Astr(string):
 	return unicode(string, encoding='utf-8')
 
 
-def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True, accents_strip=True):
+def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True, accents_strip=True, lim=3):
 
-	if not arab_str:
-		print 'The string passed into this function needs to be non-empty'
-		raise TypeError
+	emptyStringError(arab_str)
 
 	if isinstance(arab_str, str):
 		arab_str = Astr(arab_str)
@@ -90,8 +97,24 @@ def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True
 				transp += code
 				prevcode = code
 
+	if lim:
+		lim = lim +1
+		n_transp = len(transp)
+		transp = transp[:lim] if len(transp) >= lim else transp+ ''.join(['0' for x in range(lim-n_transp)])
+
 	return transp
 
 
+def arabic_soundex_names(arab_str, *args, **kwargs):
+
+	emptyStringError(arab_str)
+
+	soundex_repr = []
+	for arabname_part in arab_str.split(' '):
+		soundex_repr.append(arabic_soundex_main(arabname_part,*args, **kwargs))
+
+	return ' '.join(soundex_repr)
+
+
 if __name__ == '__main__':
-	print arabic_soundex_main(Astr('ًالسلميٌلسلميٍٍٍلسلمي'))
+	print arabic_soundex_names(Astr('ًالسلميٌلسلميٍٍٍلسلمي'))
