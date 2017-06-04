@@ -3,6 +3,7 @@ import sys
 sys.path.append("..")
 sys.path.append("../..")
 from arabic_utils.general_utils_arabic import strip_accents
+from arabic_names_parser.parser_utils import Astr, readjustSpacesInString
 
 lookup_dict = {'\u0627\u0623\u0625\u0622\u062d\u062e\u0647\u0639\u063a\u0634\u0648\u064a': '0',
 			   '\u0641\u0628': '1',
@@ -28,21 +29,6 @@ def emptyStringError(arab_str):
 		raise TypeError('The string passed into this function needs to be non-empty')
 	else:
 		pass
-
-
-def Astr(string):
-	'''
-	This function encodes in utf-8 a ASCII string with Arabic character in order for it to be
-	compatible with the string formatting in Python.
-
-	INPUT
-	string - ASCII string with arabic characters
-
-	OUTPUT
-	The input string encoded with utf-8
-	'''
-
-	return unicode(string, encoding='utf-8')
 
 
 def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True, accents_strip=True, lim=3):
@@ -108,6 +94,8 @@ def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True
 def arabic_soundex_names(arab_str, *args, **kwargs):
 
 	emptyStringError(arab_str)
+
+	arab_str = readjustSpacesInString(arab_str)
 
 	soundex_repr = []
 	for arabname_part in arab_str.split(' '):
