@@ -80,6 +80,35 @@ def identifyTypoFunction(s1, s2):
 	return [(x,s2[i]) for i,x in enumerate(s1) if x!=s2[i]]
 
 
+def identifyWordAssociationFunction(s1,s2,equality=False):
+	'''
+	This function identifies all the full words which occupy the same position in the string and are not the same. 
+	The function checks	whether the two strings are not empty and it throws a TypeError exception otherwise.
+
+	INPUT:
+	- s1: the first string
+	- s2: the second string
+
+	OUTPUT:	
+	A list of tuples, each tuple has two elements, which are two words which are associated in the strings
+	'''
+
+	emptyStringsError(s1,s2)
+
+	output_vec = []
+	s1_part, s2_part = s1.split(' '), s2.split(' ')
+	n1, n2 = len(s1_part), len(s2_part)
+	minlen = min([n1,n2])
+
+	for i in range(minlen):
+		flag = s1_part[i]==s2_part[i] if equality else s1_part[i] != s2_part[i]
+		if flag:
+			output_vec.append(tuple([s1_part[i], s2_part[i]]))
+
+	return output_vec
+
+
+
 def identifyTranspositionFunction(s1, s2):
 	'''
 	This function identifies all the transpositions made when considering two strings. The definition of transpositions in this
@@ -155,4 +184,4 @@ def identifyInsertionDeletionFunction(s1, s2, mod, wd = 1, epsilon_sym='$'):
 
 
 if __name__ == '__main__':
-	print identifyInsertionDeletionFunction('ciaobello', 'ciaobllo', 'deletion')
+	print identifyWordAssociationFunction('ciao bello', 'ciao bello', equality=True)

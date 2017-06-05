@@ -4,7 +4,7 @@ import sys
 sys.path.append("..")
 
 from utils import emptyStringsError, sameLengthError, differenceLengthError
-from utils import identifyTypoFunction, identifyTranspositionFunction, identifyInsertionDeletionFunction
+from utils import identifyTypoFunction, identifyTranspositionFunction, identifyInsertionDeletionFunction, identifyWordAssociationFunction
 
 class MyTest(unittest.TestCase):
 
@@ -100,6 +100,33 @@ class MyTest(unittest.TestCase):
 	def test_insertiondeletion21_function(self):
 		self.assertEqual(identifyInsertionDeletionFunction('tomorow','tomorrow','insertion'), [('rro','r$o')])
 
+
+	def test_association1_function(self):
+		self.assertRaises(TypeError, identifyWordAssociationFunction, ('abcd',''))
+	def test_association2_function(self):
+		self.assertRaises(TypeError, identifyWordAssociationFunction, ('abcd',''))
+	def test_association3_function(self):
+		self.assertRaises(TypeError, identifyWordAssociationFunction, ('',''))
+	def test_association4_function(self):
+		self.assertEqual(identifyWordAssociationFunction('ciao','ciao', equality=True), [('ciao','ciao')])
+	def test_association5_function(self):
+		self.assertEqual(identifyWordAssociationFunction('maybe tomorrow','but not today', equality=True), [])
+	def test_association6_function(self):
+		self.assertEqual(identifyWordAssociationFunction('maybe today','maybe', equality=True), [('maybe','maybe')])
+	def test_association7_function(self):
+		self.assertEqual(identifyWordAssociationFunction('maybe today','maybe today', equality=True), [('maybe','maybe'), ('today','today')])
+	def test_association8_function(self):
+		self.assertEqual(identifyWordAssociationFunction('maybe today or not','maybe today', equality=True), [('maybe','maybe'), ('today','today')])
+	def test_association9_function(self):
+		self.assertEqual(identifyWordAssociationFunction('ciao','caro', equality=False), [('ciao','caro')])
+	def test_association10_function(self):
+		self.assertEqual(identifyWordAssociationFunction('maybe tomorrow','but not today', equality=False), [('maybe','but'),('tomorrow','not')])
+	def test_association11_function(self):
+		self.assertEqual(identifyWordAssociationFunction('maybe today','maybe', equality=False), [])
+	def test_association12_function(self):
+		self.assertEqual(identifyWordAssociationFunction('definitely tomorrow','maybe today', equality=False), [('definitely','maybe'), ('tomorrow','today')])
+	def test_association13_function(self):
+		self.assertEqual(identifyWordAssociationFunction('maybe tomorrow or not','maybe today', equality=False), [('tomorrow','today')])
 		
 
 if __name__ == '__main__':
