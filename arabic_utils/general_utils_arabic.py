@@ -6,9 +6,40 @@ sys.path.append("..")
 
 from arabic_names_parser.parser_utils import Astr
 
+# Arabic representation form to classic Arabic lookup table, just for reference.
+arabic_forms_toclassic_lookup = {u'ﺀﺁﺂﺃﺄﺅﺆﺇﺈﺉﺊﺋﺌﺍﺎ':u'ا',
+								u'ﺏﺐﺑﺒ':u'ب',
+								u'ﺓﺔ':u'ه',
+								u'ﺕﺖﺗﺘ':u'ت',
+								u'ﺙﺚﺛﺜ':u'ث',
+								u'ﺝﺞﺟﺠ':u'ج',
+								u'ﺡﺢﺣﺤ':u'ح',
+								u'ﺥﺦﺧﺨ':u'خ',
+								u'ﺩﺪ':u'د',
+								u'ﺫﺬ':u'ذ',
+								u'ﺭﺮ':u'ر',
+								u'ﺯﺰ':u'ز',
+								u'ﺱﺲﺳﺴ':u'س',
+								u'ﺵﺶﺷﺸ':u'ش',
+								u'ﺹﺺﺻﺼ':u'ص',
+								u'ﺽﺾﺿﻀ':u'ض',
+								u'ﻁﻂﻃﻄ':u'ط',
+								u'ﻅﻆﻇﻈ':u'ظ',
+								u'ﻉﻊﻋﻌ':u'ع',
+								u'ﻍﻎﻏﻐ':u'غ',
+								u'ﻑﻒﻓﻔ':u'ف',
+								u'ﻕﻖﻗﻘ':u'ق',
+								u'ﻙﻚﻛﻜ':u'ك',
+								u'ﻝﻞﻟﻠ':u'ل',
+								u'ﻡﻢﻣﻤ':u'م',
+								u'ﻥﻦﻧﻨ':u'ن',
+								u'ﻩﻪﻫﻬ':u'ه',
+								u'ﻭﻮ':u'و',
+								u'ﻯﻰﻱﻲﻳﻴ':u'ي',
+								u'ﻵﻶﻷﻸﻹﻺﻻﻼ':u'لا'}
+
 
 tanwin_vec = (Astr('ً'), Astr('ٌ'), Astr('ٍ'))
-
 
 def strip_accents(s, tanween_flag=False):
 	'''
