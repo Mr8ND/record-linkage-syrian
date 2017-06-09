@@ -25,6 +25,9 @@ lookup_dict_arab = {u'ا': 0, u'أ': 0, u'إ': 0, u'آ': 0, u'ح': 0, u'خ': 0, 
 
 
 def emptyStringError(arab_str):
+	'''
+	This function throws a TypeError when the input string is empty.
+	'''
 	if not arab_str:
 		raise TypeError('The string passed into this function needs to be non-empty')
 	else:
@@ -32,6 +35,27 @@ def emptyStringError(arab_str):
 
 
 def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True, accents_strip=True, lim=3):
+	'''
+	This is the main function for the soundex, and it has been coded thinking about a single word being passed as
+	argument. Although, as soon as the string is not empty, it will also work for strings with more than one word
+	in it.
+
+	INPUT
+	- arab_str: the string in arabic. Usually one arabic word, but can be multiple
+	- firstcharuniforming: a logical flag. Heuristically the first character seems not to play an important role
+		into the arabic soundex, if this flag is true then the first character is uniformly set to be a 'x'
+		independently of the character
+	- firstletter_rem: a logical flag. From a sound point of view, in arabic there are certain initial characters
+		that are not pronounced when they are at the beginning of a sentence. The soundex removes them from the string
+		if firstletter_rem is set to true
+	- accents_strip: a logical flag. If true, removes the accents from the string
+	- lim: numerical, integer. If not None, forces the soundex representation to be composed a number of numbers or
+		characters equal to lim after the first character. If the soundex representation was longer, this would cut it.
+		If it was shorter, it would fill the spaces with 0. E.g. with lim=3 : x7213 is set to x721 and x7 to x700.
+
+	OUTPUT
+	- transp: soundex representation of the arabic string.
+	'''
 
 	emptyStringError(arab_str)
 
@@ -42,18 +66,18 @@ def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True
 		arab_str = strip_accents(arab_str)
 
 
-	#The first thing to do is to exclude the first letter in the firstletter_rem option is activated.
-	#This apparently improves the performances of the soundex, according  to Tamman Koujian's C# version of 
-	#this soundex.
+	# The first thing to do is to exclude the first letter in the firstletter_rem option is activated.
+	# This apparently improves the performances of the soundex, according  to Tamman Koujian's C# version of 
+	# this soundex.
 
 
 	if firstletter_rem and arab_str[0] in '\u0627\u0623\u0625\u0622':
 		arab_str = arab_str[1:]
 
 
-	#Now we need to convert the string into the relative sound.
-	#Again according to Tamman Koujian's C# version, the first letter is not useful.
-	#It firstcharpruning is True, than this happens, otherwise it does not.
+	# Now we need to convert the string into the relative sound.
+	# Again according to Tamman Koujian's C# version, the first letter is not useful.
+	# It firstcharpruning is True, than this happens, otherwise it does not.
 
 	transp = ''
 	if firstcharuniforming:
@@ -62,7 +86,7 @@ def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True
 		transp += arab_str[0]
 
 
-	#We now proceed to the transposition.
+	# We now proceed to the transposition.
 
 	def charInDictKeys(char, dict_chars):
 		keys_unicode = [x for x in dict_chars.keys()]
@@ -83,6 +107,10 @@ def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True
 				transp += code
 				prevcode = code
 
+	# Lim is a parameter which limits the total length of a soundex word.
+	# If this is in place then the word is limited with a length which is equal to lim + 1
+	# which implies the first letter + first 3 numbers/letters
+
 	if lim:
 		lim = lim +1
 		n_transp = len(transp)
@@ -92,6 +120,18 @@ def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True
 
 
 def arabic_soundex_names(arab_str, *args, **kwargs):
+	'''
+	This function is just a wrapper for the main arabic soundex function, which is arabic_soundex_main.
+	This function checks whether the string is empty, readjust the spaces and then gets a soundex representation
+	of the string word by word.
+
+	INPUT:
+	- arab_str: the arabic string, thought to be a multi-words string here
+	- *args, **kwargs: arguments to be passed into the main arabic soundex function
+
+	OUTPUT:
+	- A word by word soundex representation of the string
+	'''
 
 	emptyStringError(arab_str)
 
