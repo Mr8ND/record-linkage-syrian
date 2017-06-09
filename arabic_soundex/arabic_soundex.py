@@ -70,8 +70,7 @@ def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True
 	# This apparently improves the performances of the soundex, according  to Tamman Koujian's C# version of 
 	# this soundex.
 
-
-	if firstletter_rem and arab_str[0] in '\u0627\u0623\u0625\u0622':
+	if firstletter_rem and arab_str[0] in [u'\u0627',u'\u0623',u'\u0625',u'\u0622']:
 		arab_str = arab_str[1:]
 
 
@@ -145,4 +144,4 @@ def arabic_soundex_names(arab_str, *args, **kwargs):
 
 
 if __name__ == '__main__':
-	print arabic_soundex_names(Astr('ًالسلميٌلسلميٍٍٍلسلمي'))
+	print arabic_soundex_names(u'محمد')
