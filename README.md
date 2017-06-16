@@ -38,5 +38,5 @@ Names used are synthetical and do not represent any real individual.
 
 ## Acknowledgments
 
-* HRDAG for having provided framework to work with
 * Jared Murray, Jordan Rodu and Robin Mejia for pivotal feedbacks and discussions
+* HRDAG
