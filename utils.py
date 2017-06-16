@@ -1,4 +1,6 @@
 from itertools import izip, islice, tee
+from arabic_soundex.arabic_soundex import arabicSoundexNames
+from collections import Counter
 
 
 def ngramFunction(string, n):
@@ -60,18 +62,15 @@ def differenceLengthError(s1, s2, diff):
 
 def identifyTypoFunction(s1, s2):
 	'''
-	This function identifies all the typos made when considering two strings. The definition of typo in this
-	case is two character being different while being in the same position in a string. The function checks
-	whether the two strings are not empty and have the same length and it throws a TypeError exception
-	otherwise.
+	This function identifies all the typos made when considering two strings. The definition of typo in this case is two character being different while being in the same position in a string. The function checks
+	whether the two strings are not empty and have the same length and it throws a TypeError exception otherwise.
 
 	INPUT:
 	- s1: the first string
 	- s2: the second string
 
 	OUTPUT:	
-	A list of tuples, each tuple has two elements, one being the character in the first string and the other the
-	character in the second string which are identified as typo.
+	A list of tuples, each tuple has two elements, one being the character in the first string and the other the character in the second string which are identified as typo.
 	'''
 	
 	emptyStringsError(s1, s2)
@@ -111,18 +110,14 @@ def identifyWordAssociationFunction(s1,s2,equality=False):
 
 def identifyTranspositionFunction(s1, s2):
 	'''
-	This function identifies all the transpositions made when considering two strings. The definition of transpositions in this
-	case is two character being swapped between two strings - i.e. "hello" and "Helol". The function checks
-	whether the two strings are not empty and have the same length and it throws a TypeError exception
-	otherwise.
+	This function identifies all the transpositions made when considering two strings. The definition of transpositions in this	case is two character being swapped between two strings - i.e. "hello" and "Helol". The function checks	whether the two strings are not empty and have the same length and it throws a TypeError exception otherwise.
 
 	INPUT:
 	- s1: the first string
 	- s2: the second string
 
 	OUTPUT:	
-	A list of tuples, each tuple has two elements, one being the pair of characters in the first string and the other the
-	character in the second string which are identified as a transposition.
+	A list of tuples, each tuple has two elements, one being the pair of characters in the first string and the other the character in the second string which are identified as a transposition.
 	'''
 
 	emptyStringsError(s1, s2)
@@ -137,23 +132,17 @@ def identifyTranspositionFunction(s1, s2):
 
 def identifyInsertionDeletionFunction(s1, s2, mod, wd = 1, epsilon_sym='$'):
 	'''
-	This function identifies either one deletion or insertion made when considering two strings. Importantly the function will work
-	only when only a single deletion or insertion have been operated. The function will throw a TypeError exception if one of the
-	two strings is empty or whether their difference in length is not 1. It will also throw an expection if the parameter "mod" is
-	null or different from 'insertion' or 'deletion'.
+	This function identifies either one deletion or insertion made when considering two strings. Importantly the function will work	only when only a single deletion or insertion have been operated. The function will throw a TypeError exception if one of the two strings is empty or whether their difference in length is not 1. It will also throw an expection if the parameter "mod" is null or different from 'insertion' or 'deletion'.
 
 	INPUT:
 	- s1: the first string
 	- s2: the second string
 	- mod: parameter indication whether insertion or deletion
-	- wd: optional, the width of the window in which the output is provided. A wd=1 will return windows with the insertion/deletion
-		character with 1 character to the left and one to the right.
+	- wd: optional, the width of the window in which the output is provided. A wd=1 will return windows with the insertion/deletion	character with 1 character to the left and one to the right.
 	- epsilon_sym: optional, it's the symbol used to indicate the character which has been inserted/deleted
 
 	OUTPUT:	
-	A list of a single tuple in which the first element is the insertion/deletion character plus wd character to its left and to its
-	right in the longer string, while the same is done using the epsilon_sym in the smaller string. I.e. "hello" and "hllo" as input
-	will result in an output of [('hel','h$l')].
+	A list of a single tuple in which the first element is the insertion/deletion character plus wd character to its left and to its right in the longer string, while the same is done using the epsilon_sym in the smaller string. I.e. "hello" and "hllo" as input will result in an output of [('hel','h$l')].
 	'''
 
 	emptyStringsError(s1, s2)
@@ -181,6 +170,95 @@ def identifyInsertionDeletionFunction(s1, s2, mod, wd = 1, epsilon_sym='$'):
 				output.append(tuple([s1[j-wd:j+wd+1], s2[j-wd] + epsilon_sym + s2[j:j+wd]]))
 	
 	return output
+
+
+def removeAlCharsFunc(string):
+	'''
+	This function removes the "AL" Arabic characters from an unicode strings.
+
+	INPUT:
+	- string: Unicode string, ideally in Arabic
+
+	OUTPUT:
+	The same string with the "AL" characters removed.
+	'''
+	al_list = [u'آل', u'ال', u'من']
+	return string.replace(al_list[0], '').replace(al_list[1], '').replace(al_list[2], '')
+
+
+def CompContainedFunc(s1,s2):
+	'''
+	This function returns 1 if one of the two strings in input is completely contained into the other.
+	It will return 1 if the two strings are exactly the same.
+
+	INPUT:
+	- s1, s2: two strings, not necessarily Arabic or Unicode
+
+	OUTPUT:
+	1 if s1 is completely contained in s2 or viceversa (s2 contained in s1), 0 if not.
+	'''
+	output = 0
+	s1_part, s2_part = s1.split(' '), s2.split(' ')
+	n1, n2 = len(s1_part), len(s2_part)
+	if n1 >= n2:
+		output= int(all(x in s1_part for x in s2_part))
+	elif n2 > n1:
+		output = int(all(x in s2_part for x in s1_part))
+	return output
+
+
+def exactMatchFun(s1,s2):
+	'''
+	This function returns 1 if two strings are exactly the same, 0 if not.
+
+	INPUT:
+	- s1, s2: two strings, not necessarily Arabic or Unicode.
+
+	OUTPUT:
+	1 if s1 is exactly equal to s2, 0 if not.
+	'''
+	return int(s1==s2)
+
+
+def soundexMatchFun(s1,s2):
+	'''
+	This function returns 1 if the two strings have the same Soundex representation, 0 if not.
+
+	INPUT:
+	- s1, s2: two strings, have to be in Arabic unicode characters.
+
+	OUTPUT:
+	1 if their Soundex representation is exactly the same, 0 if not.
+	'''
+	return int(arabicSoundexNames(s1)==arabicSoundexNames(s2))
+
+
+def noSpaceMatchFunc(s1,s2):
+	'''
+	This function returns 1 if the two strings are the same when removing spaces, 0 if not.
+
+	INPUT:
+	- s1, s2: two strings,  not necessarily Arabic or Unicode.
+
+	OUTPUT:
+	1 if the two strings are exactly the same when removing spaces, 0 if not.
+	'''
+	return int(s1.replace(' ','')==s2.replace(' ',''))
+
+
+def ShuffleMatchFunc(s1,s2):
+	'''
+	This function returns 1 if the two strings are composed of exactly the same words in the same amount, just shuffled around, 0 if not.
+	It will return 1 if the two strings are exactly the same.
+
+	INPUT:
+	- s1, s2: two strings, not necessarily Arabic or Unicode. The two strings are ideally composed by multiple words. If strings are composed by a single word, this function will return 1 if the two strings are the same simply.
+
+	OUTPUT:
+	1 if the two strings are composed by exactly the same words, just shuffled arounds, 0 if not.
+	'''
+	return int(Counter(s1.split(' ')) == Counter(s2.split(' ')))
+
 
 
 if __name__ == '__main__':
