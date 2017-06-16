@@ -16,6 +16,7 @@ The file parser_utils.py contains utility functions for the Arabic parser to run
 * __isolateNextWordDictKeys__ - use to understand which words follow and are before a word which is identified as flag of a specific name part;
 * __concatenateFunction__ - use to attach together the words which needs to be translated with the following word to be considered as a name. E.g. "Mr. Red" will be considered as a single word, even though "Mr." and "Red" are two separate words.
 
+All functions have a docstring attached to it, read that for more information.
 
 ### TESTING
 The test folder here works a bit differently.
