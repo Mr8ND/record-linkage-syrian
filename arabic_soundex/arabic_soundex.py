@@ -2,7 +2,7 @@
 import sys
 sys.path.append("..")
 sys.path.append("../..")
-from arabic_utils.general_utils_arabic import strip_accents
+from arabic_utils.general_utils_arabic import stripAccents
 from arabic_names_parser.parser_utils import Astr, readjustSpacesInString
 
 lookup_dict = {'\u0627\u0623\u0625\u0622\u062d\u062e\u0647\u0639\u063a\u0634\u0648\u064a\u0621': '0',
@@ -34,7 +34,7 @@ def emptyStringError(arab_str):
 		pass
 
 
-def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True, accents_strip=True, lim=3):
+def arabicSoundexMain(arab_str, firstcharuniforming=True, firstletter_rem=True, accents_strip=True, lim=3):
 	'''
 	This is the main function for the soundex, and it has been coded thinking about a single word being passed as
 	argument. Although, as soon as the string is not empty, it will also work for strings with more than one word
@@ -63,7 +63,7 @@ def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True
 		arab_str = Astr(arab_str)
 
 	if accents_strip:
-		arab_str = strip_accents(arab_str)
+		arab_str = stripAccents(arab_str)
 
 
 	# The first thing to do is to exclude the first letter in the firstletter_rem option is activated.
@@ -118,9 +118,9 @@ def arabic_soundex_main(arab_str, firstcharuniforming=True, firstletter_rem=True
 	return transp
 
 
-def arabic_soundex_names(arab_str, *args, **kwargs):
+def arabicSoundexNames(arab_str, *args, **kwargs):
 	'''
-	This function is just a wrapper for the main arabic soundex function, which is arabic_soundex_main.
+	This function is just a wrapper for the main arabic soundex function, which is arabicSoundexMain.
 	This function checks whether the string is empty, readjust the spaces and then gets a soundex representation
 	of the string word by word.
 
@@ -138,10 +138,10 @@ def arabic_soundex_names(arab_str, *args, **kwargs):
 
 	soundex_repr = []
 	for arabname_part in arab_str.split(' '):
-		soundex_repr.append(arabic_soundex_main(arabname_part,*args, **kwargs))
+		soundex_repr.append(arabicSoundexMain(arabname_part,*args, **kwargs))
 
 	return ' '.join(soundex_repr)
 
 
 if __name__ == '__main__':
-	print arabic_soundex_names(u'محمد')
+	print arabicSoundexNames(u'محمد')
