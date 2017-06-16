@@ -39,9 +39,9 @@ arabic_forms_toclassic_lookup = {u'ﺀﺁﺂﺃﺄﺅﺆﺇﺈﺉﺊﺋﺌﺍﺎ
 								u'ﻵﻶﻷﻸﻹﻺﻻﻼ':u'لا'}
 
 
-tanwin_vec = (Astr('ً'), Astr('ٌ'), Astr('ٍ'))
+tanween_chars = (Astr('ً'), Astr('ٌ'), Astr('ٍ'))
 
-def strip_accents(s, tanween_flag=False):
+def stripAccents(s, tanween_flag=False):
 	'''
 	This function takes any unicode string and strips the accents. As this function has been created with arabic in mind, if the
 	tanween_flag is True, it will normalize all accents apart from tanween accents.
@@ -58,21 +58,37 @@ def strip_accents(s, tanween_flag=False):
 		s = Astr(s)
 
 	if tanween_flag:
-		tanween_vec = [1 if c in tanwin_vec else 0 for c in s]
+		tanween_vec = [1 if c in tanween_chars else 0 for c in s]
 		return ''.join(unicodedata.normalize('NFD', c) if (unicodedata.category(c) != 'Mn' and tanween_vec[i]==0) else c for i,c in enumerate(s))
 	else:
 		return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
 
 
-def test_stripfunction():
-	#Tests taken from the examples at https://learnquranicarabic.wordpress.com/2010/07/26/three-types-of-tanwin/
+def convertReprFunct(s):
+	'''
+	This function is a lookup function for representation characters in unicode. Arabic a series of 
+	different characters, which can be translated in common arabic. The function replaces these
+	characters with common arabic characters.
 
-	test_vec = (('محمدٌ','محمدٌ', 'محمد'), ('محمدٍ','محمدٍ','محمد'), ('محمداً','محمداً','محمدا'))
+	INPUT
+	s: unicode string. It does not have to be in Arabic, but the function will likely not to do
+		anything othwewise
 
-	for orig_str, tanw_str, stri_str in test_vec:
-		print Astr(tanw_str) == strip_accents(orig_str, tanween_flag=True)
-		print Astr(stri_str) == strip_accents(orig_str)
+	OUTPUT
+	The same string in which every character which was in its representation form has been
+		translated to its common arabic character.
+	'''
 
-
-if __name__ == '__main__':
-	test_stripfunction()
+	if isinstance(s, str):
+		s = Astr(s)
+		
+	output = ''
+	for i,xpart in enumerate(s):
+		flag = False
+		for k,v in arabic_forms_toclassic_lookup.iteritems():
+			if xpart in k and not flag:
+				output += v
+				flag = True
+		if not flag:
+			output += xpart
+	return output
