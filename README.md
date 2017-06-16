@@ -22,7 +22,13 @@ import unittest2 as unittest
 ```
 
 All files are coded in "utf-8" to support the unicode characters for Arabic.
+All the functions are provided with docstrings.
+When importing them, use the following to visualize the docstring - or look at the file in which they are defined:
 
+```
+from utils.py import foo
+help(foo)
+```
 
 ## Running the tests
 
@@ -40,3 +46,5 @@ Names used are synthetical and do not represent any real individual.
 
 * Jared Murray, Jordan Rodu and Robin Mejia for pivotal feedbacks and discussions
 * HRDAG
+
+(README style from https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
