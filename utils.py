@@ -207,7 +207,7 @@ def CompContainedFunc(s1,s2):
 	return output
 
 
-def exactMatchFun(s1,s2):
+def exactMatchFunction(s1,s2):
 	'''
 	This function returns 1 if two strings are exactly the same, 0 if not.
 
@@ -220,7 +220,7 @@ def exactMatchFun(s1,s2):
 	return int(s1==s2)
 
 
-def soundexMatchFun(s1,s2):
+def soundexMatchFunction(s1,s2):
 	'''
 	This function returns 1 if the two strings have the same Soundex representation, 0 if not.
 
@@ -233,7 +233,7 @@ def soundexMatchFun(s1,s2):
 	return int(arabicSoundexNames(s1)==arabicSoundexNames(s2))
 
 
-def noSpaceMatchFunc(s1,s2):
+def noSpaceMatchFunction(s1,s2):
 	'''
 	This function returns 1 if the two strings are the same when removing spaces, 0 if not.
 
@@ -246,7 +246,7 @@ def noSpaceMatchFunc(s1,s2):
 	return int(s1.replace(' ','')==s2.replace(' ',''))
 
 
-def ShuffleMatchFunc(s1,s2):
+def ShuffleMatchFunction(s1,s2):
 	'''
 	This function returns 1 if the two strings are composed of exactly the same words in the same amount, just shuffled around, 0 if not.
 	It will return 1 if the two strings are exactly the same.
