@@ -1,6 +1,4 @@
 from itertools import izip, islice, tee
-from arabic_soundex.arabic_soundex import arabicSoundexNames
-from collections import Counter
 
 
 def ngramFunction(string, n):
@@ -170,95 +168,6 @@ def identifyInsertionDeletionFunction(s1, s2, mod, wd = 1, epsilon_sym='$'):
 				output.append(tuple([s1[j-wd:j+wd+1], s2[j-wd] + epsilon_sym + s2[j:j+wd]]))
 	
 	return output
-
-
-def removeAlCharsFunc(string):
-	'''
-	This function removes the "AL" Arabic characters from an unicode strings.
-
-	INPUT:
-	- string: Unicode string, ideally in Arabic
-
-	OUTPUT:
-	The same string with the "AL" characters removed.
-	'''
-	al_list = [u'آل', u'ال', u'من']
-	return string.replace(al_list[0], '').replace(al_list[1], '').replace(al_list[2], '')
-
-
-def CompContainedFunc(s1,s2):
-	'''
-	This function returns 1 if one of the two strings in input is completely contained into the other.
-	It will return 1 if the two strings are exactly the same.
-
-	INPUT:
-	- s1, s2: two strings, not necessarily Arabic or Unicode
-
-	OUTPUT:
-	1 if s1 is completely contained in s2 or viceversa (s2 contained in s1), 0 if not.
-	'''
-	output = 0
-	s1_part, s2_part = s1.split(' '), s2.split(' ')
-	n1, n2 = len(s1_part), len(s2_part)
-	if n1 >= n2:
-		output= int(all(x in s1_part for x in s2_part))
-	elif n2 > n1:
-		output = int(all(x in s2_part for x in s1_part))
-	return output
-
-
-def exactMatchFunction(s1,s2):
-	'''
-	This function returns 1 if two strings are exactly the same, 0 if not.
-
-	INPUT:
-	- s1, s2: two strings, not necessarily Arabic or Unicode.
-
-	OUTPUT:
-	1 if s1 is exactly equal to s2, 0 if not.
-	'''
-	return int(s1==s2)
-
-
-def soundexMatchFunction(s1,s2):
-	'''
-	This function returns 1 if the two strings have the same Soundex representation, 0 if not.
-
-	INPUT:
-	- s1, s2: two strings, have to be in Arabic unicode characters.
-
-	OUTPUT:
-	1 if their Soundex representation is exactly the same, 0 if not.
-	'''
-	return int(arabicSoundexNames(s1)==arabicSoundexNames(s2))
-
-
-def noSpaceMatchFunction(s1,s2):
-	'''
-	This function returns 1 if the two strings are the same when removing spaces, 0 if not.
-
-	INPUT:
-	- s1, s2: two strings,  not necessarily Arabic or Unicode.
-
-	OUTPUT:
-	1 if the two strings are exactly the same when removing spaces, 0 if not.
-	'''
-	return int(s1.replace(' ','')==s2.replace(' ',''))
-
-
-def ShuffleMatchFunction(s1,s2):
-	'''
-	This function returns 1 if the two strings are composed of exactly the same words in the same amount, just shuffled around, 0 if not.
-	It will return 1 if the two strings are exactly the same.
-
-	INPUT:
-	- s1, s2: two strings, not necessarily Arabic or Unicode. The two strings are ideally composed by multiple words. If strings are composed by a single word, this function will return 1 if the two strings are the same simply.
-
-	OUTPUT:
-	1 if the two strings are composed by exactly the same words, just shuffled arounds, 0 if not.
-	'''
-	return int(Counter(s1.split(' ')) == Counter(s2.split(' ')))
-
 
 
 if __name__ == '__main__':
