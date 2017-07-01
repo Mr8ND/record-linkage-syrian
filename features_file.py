@@ -4,7 +4,7 @@ import icu
 from functools import partial
 
 
-def CompContainedFunc(s1,s2):
+def CompContainedFunction(s1,s2):
 	'''
 	This function returns 1 if one of the two strings in input is completely contained into the other.
 	It will return 1 if the two strings are exactly the same.
@@ -279,7 +279,7 @@ def sameSuffixWordsFunction(s1, s2, n=3):
 feature_dict = {
 
 	'deterministic_features':{
-		'comp_contained_match': CompContainedFunc,
+		'comp_contained_match': CompContainedFunction,
 		'exact_match': exactMatchFunction,
 		'soundex_match': soundexMatchFunction,
 		'nospace_match': noSpaceMatchFunction,

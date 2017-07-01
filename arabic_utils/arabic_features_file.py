@@ -20,7 +20,7 @@ def removeAlChars(string):
 	al_list = [u'آل', u'ال', u'من']
 	return string.replace(al_list[0], '').replace(al_list[1], '').replace(al_list[2], '')
 
-tanween_chars = (Astr('ً'), Astr('ٌ'), Astr('ٍ'))
+tanween_chars = (Astr(u'ً'), Astr(u'ٌ'), Astr(u'ٍ'))
 
 
 def stripAccents(s, tanween_flag=False):
@@ -90,17 +90,20 @@ def stemArabicWordFunction(word):
 	return stemmer.ISRIStemmer.stem(stemmer.ISRIStemmer(), word)
 
 
-def fullPrefSufRemFunction(string):
+def fullPrefSufRemFunction(string, quick=True):
 	'''
 	This function takes in input a string, which can be composed of multiple words, and removes all possible suffixes and prefixes due to plural, gender, personal pronouns and cases in the sentence, word by word.
 
 	INPUT:
-	string: expected to be an Arabic unicode string, can be composed of multiple words
+	- string: expected to be an Arabic unicode string, can be composed of multiple words
+	- quick: logical flag, if True, makes the function a one-liner 
 
 	OUTPUT:
 	same string with prefixes and suffixes removed as indicated above.
 	'''
-
-	string_vec = [removePrefixesFunction(removeSuffixesFunction(w)) for w in string.split(' ')]
-	string_vec_stemmed = [stemArabicWordFunction(w) for w in string_vec]
-	return ' '.join(string_vec_stemmed)
+	if not quick:
+		string_vec = [removePrefixesFunction(removeSuffixesFunction(w)) for w in string.split(' ')]
+		string_vec_stemmed = [stemArabicWordFunction(w) for w in string_vec]
+		return ' '.join(string_vec_stemmed)
+	else:
+		return ' '.join([stemArabicWordFunction(removePrefixesFunction(removeSuffixesFunction(w))) for w in string.split(' ')])
