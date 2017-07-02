@@ -416,7 +416,7 @@ def nWordDiffFunction(s1, s2, perc=True):
 	percentage of differing words if perc==True, else the absolute number 
 	'''
 	sshort_notfound, s_long = effectiveWordDiffFunction(s1,s2)
-	len_short = min([len(s1.split(' '), s2.split(' '))])
+	len_short = min([len(s1.split(' ')), len(s2.split(' '))])
 
 	if perc:
 		return float(len(sshort_notfound))/len_short
