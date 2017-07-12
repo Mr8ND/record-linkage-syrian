@@ -10,7 +10,7 @@ def CompContainedFunction(s1,s2):
 	It will return 1 if the two strings are exactly the same.
 
 	INPUT:
-	- s1, s2: two strings, not necessarily Arabic or Unicode
+	- s1, s2: two strings, not necessarily Arabic or Unicode.
 
 	OUTPUT:
 	1 if s1 is completely contained in s2 or viceversa (s2 contained in s1), 0 if not.
